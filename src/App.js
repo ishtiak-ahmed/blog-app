@@ -1,24 +1,46 @@
-import logo from './logo.svg';
 import './App.css';
+import { createContext, useEffect, useState } from 'react';
+import AddBlog from './Components/AddBlog/AddBlog';
+import ShortBlog from './Components/ShortBlog/ShortBlog';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import FullBlog from './Components/FullBlog/FullBlog';
 
+export const UserContext = createContext()
 function App() {
+  const [user, setUser] = useState({ fullName: 'Ishtiak Ahmed' })
+  const [blogList, setBlogList] = useState([])
+  useEffect(() => {
+    fetch('http://localhost:9717/getBlogs')
+      .then(res => res.json())
+      .then(data => setBlogList(data))
+  }, [])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <UserContext.Provider value={[user, setUser]}>
+      <Router>
+        <header>
+
+          <h2>Ishtiak blog</h2>
+          <div>
+            <img src={user.photo} alt="" /><h5>{user.fullName}</h5>
+          </div>
+        </header>
+        <Switch>
+          <Route path='/blog/:id'>
+            <FullBlog></FullBlog>
+          </Route>
+          <Route path='/' exact>
+            <AddBlog></AddBlog>
+            {
+              blogList.map(blog => <ShortBlog blog={blog}></ShortBlog>)
+            }
+          </Route>
+        </Switch>
+      </Router>
+    </UserContext.Provider>
   );
 }
 
