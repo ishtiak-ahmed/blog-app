@@ -10,4 +10,4 @@
     [ ] Connect comment to parent
     [ ] Show Up Vote
     [ ] Show Down Vote
-    [ ]
+    [ ] User Registration
