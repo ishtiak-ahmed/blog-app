@@ -79,10 +79,14 @@ const FullBlog = () => {
                         blog.authorId === user.userName ?
                             <>
                                 <button onClick={handleDelete}>Delete</button>
-                                <button onClick={handleCommenting}>{commentStatus ? 'Turn Off Reply' : 'Turn On Reply'}</button>
-                                <button onClick={deleteAllComment}>Delete All Comment</button>
                                 <button onClick={() => setShowEdit(!showEdit)}>Edit</button> </>
                             : <></>
+                    }
+                    {
+                        user.role === 'Blogger' ?
+                            <>
+                                <button onClick={handleCommenting}>{commentStatus ? 'Turn Off Reply' : 'Turn On Reply'}</button>
+                                <button onClick={deleteAllComment}>Delete All Comment</button> </> : <></>
                     }
                     <Action action={{ upVote, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
                 </div>
