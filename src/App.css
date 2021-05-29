@@ -37,13 +37,14 @@ header {
   margin: 2em 0;
   padding: 2em;
   border: 1px solid gray;
-  overflow: hidden;
   border-radius: 10px;
-  overflow: hidden;
 }
 .shortblog .info p {
   padding: 1em 0;
   margin: 1em 0;
+}
+.shortblog div {
+  overflow: hidden;
 }
 img {
   max-width: 100%;
