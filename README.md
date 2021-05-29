@@ -21,3 +21,12 @@
     [ ] schedule comment turn off
     [ ] Feature comment
     [ ] banned spammer from app
+    [x] Comment nesting done
+    [ ] Paginate Blog Post and Comment
+    [ ] Sort Post and Comment by time
+
+### Hosting and Server
+
+    [x] Firebase client hosting
+    [ ] Heroku Server Hosting
+    [ ] Netlify Hosting
