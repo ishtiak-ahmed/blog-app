@@ -17,7 +17,7 @@ const AddBlog = () => {
         blog.upVote = []
         blog.downVote = []
         blog.reply = []
-        axios.post(`http://localhost:9717/addBlog`, blog)
+        axios.post(`https://ishtiak-blog.herokuapp.com/addBlog`, blog)
             .then(data => {
                 console.log(data)
             })

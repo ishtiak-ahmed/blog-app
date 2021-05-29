@@ -18,7 +18,7 @@ const Comment = ({ id, parentId, commentStatus }) => {
     const [upVote, setUpVote] = useState([])
     const [downVote, setDownVote] = useState([])
     useEffect(() => {
-        axios(`http://localhost:9717/getComment/${id}`)
+        axios(`http://https://ishtiak-blog.herokuapp.com/getComment/${id}`)
             .then(data => {
                 setCommnetData(data.data)
                 setReply(data.data.reply)

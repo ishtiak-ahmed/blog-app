@@ -21,7 +21,7 @@ const FullBlog = () => {
     const { id } = useParams()
     const [blog, setBlog] = useState({})
     useEffect(() => {
-        axios(`http://localhost:9717/blog/${id}`)
+        axios(`http://https://ishtiak-blog.herokuapp.com/blog/${id}`)
             .then(data => {
                 setAllReply(data.data.reply)
                 setDownVote(data.data.downVote)
@@ -35,7 +35,7 @@ const FullBlog = () => {
     }
     const addUpVote = () => {
         const newUpVote = [...upVote, user.userName]
-        axios.patch(`http://localhost:9717/blogUpVote/${id}`, { upVote: newUpVote })
+        axios.patch(`http://https://ishtiak-blog.herokuapp.com/blogUpVote/${id}`, { upVote: newUpVote })
             .then(data => console.log(data))
         setUpVote([...upVote, user.fullName])
     }
@@ -44,7 +44,7 @@ const FullBlog = () => {
     }
 
     const handleDelete = () => {
-        const url = `http://localhost:9717/deleteBlog/${blog._id}`
+        const url = `http://https://ishtiak-blog.herokuapp.com/deleteBlog/${blog._id}`
         console.log(url)
         axios.delete(url)
             .then(result => {
@@ -64,7 +64,7 @@ const FullBlog = () => {
         console.log('Toggling reply status')
         const replyStatus = !commentStatus
         setCommentStatus(replyStatus)
-        axios.patch(`http://localhost:9717/updateReplyStatus/${blog._id}`, { replyStatus: replyStatus })
+        axios.patch(`http://https://ishtiak-blog.herokuapp.com/updateReplyStatus/${blog._id}`, { replyStatus: replyStatus })
             .then(res => {
                 setModifyCount(modifyCount + 1)
                 console.log(res)

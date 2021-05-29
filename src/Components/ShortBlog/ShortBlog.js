@@ -17,7 +17,7 @@ const ShortBlog = ({ blog }) => {
         setShowEdit(true)
     }
     const handleDelete = () => {
-        const url = `http://localhost:9717/deleteBlog/${blog._id}`
+        const url = `http://https://ishtiak-blog.herokuapp.com/deleteBlog/${blog._id}`
         console.log(url)
         axios.delete(url)
             .then(result => {

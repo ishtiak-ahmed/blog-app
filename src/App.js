@@ -19,7 +19,7 @@ function App() {
   const [user, setUser] = useState({})
   const [blogList, setBlogList] = useState([])
   useEffect(() => {
-    fetch('http://localhost:9717/getBlogs')
+    fetch('https://ishtiak-blog.herokuapp.com/getBlogs')
       .then(res => res.json())
       .then(data => setBlogList(data))
   }, [modifyCount])
