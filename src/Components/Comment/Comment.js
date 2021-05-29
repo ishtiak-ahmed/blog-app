@@ -8,20 +8,21 @@ const Comment = ({ id }) => {
     useEffect(() => {
         axios(`http://localhost:9717/getComment/${id}`)
             .then(data => setCommnetData(data.data))
-    }, [id])
+    }, [showReply])
     const toggleReply = () => {
         setShowReply(!showReply)
     }
     return (
         <div className='comment'>
             <h2>{commentData.comment}</h2>
-            <button onClick={toggleReply}>Reply</button>
+            <p>{commentData.commenter}</p>
+            <button onClick={toggleReply}>All Reply</button>
             {
                 showReply ?
                     <div>
-                        <NewComment></NewComment>
+                        <NewComment setShowReply={setShowReply} parentId={id}></NewComment>
                         {
-                            commentData.reply.map(reply => <Comment key={reply} id={reply}></Comment>)
+                            commentData?.reply.map(reply => <Comment key={reply} id={reply}></Comment>)
                         }
                     </div>
                     : <></>

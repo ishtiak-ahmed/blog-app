@@ -5,7 +5,8 @@ import ShortBlog from './Components/ShortBlog/ShortBlog';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from "react-router-dom";
 import FullBlog from './Components/FullBlog/FullBlog';
 
@@ -23,7 +24,7 @@ function App() {
       <Router>
         <header>
 
-          <h2>Ishtiak blog</h2>
+          <h2><Link to='/'> Ishtiak blog</Link></h2>
           <div>
             <img src={user.photo} alt="" /><h5>{user.fullName}</h5>
           </div>
@@ -35,7 +36,7 @@ function App() {
           <Route path='/' exact>
             <AddBlog></AddBlog>
             {
-              blogList.map(blog => <ShortBlog blog={blog}></ShortBlog>)
+              blogList.map(blog => <ShortBlog key={blog._id} blog={blog}></ShortBlog>)
             }
           </Route>
         </Switch>
