@@ -2,12 +2,13 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
-import { deleteComment, updateParent } from '../BloggerAction/BloggerAction';
+import { deleteComment, markAsSpam, removeFromSpam, updateParent } from '../BloggerAction/BloggerAction';
 import EditComment from './EditComment';
 import NewComment from './NewComment';
 
 const Comment = ({ id, parentId, commentStatus }) => {
     const [user] = useContext(UserContext)
+    const [topCommenter, setTopCommenter] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [spam, setSpam] = useState(false)
@@ -42,6 +43,14 @@ const Comment = ({ id, parentId, commentStatus }) => {
         updateParent(parentId, id)
         setModifyCount(modifyCount + 1)
     }
+    const handleSpammer = () => {
+        if (spam) {
+            removeFromSpam(commentData.commenterId)
+        } else {
+            markAsSpam(commentData.commenterId)
+        }
+        setSpam(!spam)
+    }
     return (
         <div className='comment'>
             <p>{commentData.comment}
@@ -49,13 +58,19 @@ const Comment = ({ id, parentId, commentStatus }) => {
                     <>
                         <button onClick={handleEdit}>Edit</button>
                         <button onClick={handleDelete}>Delete</button>
-                    </> : <></>}
+                    </> : ''}
             </p>
             {
-                showEdit ? <EditComment setShowEdit={setShowEdit} comment={commentData}></EditComment> : <></>
+                showEdit ? <EditComment setShowEdit={setShowEdit} comment={commentData}></EditComment> : ''
             }
-            <p><strong>{commentData.commenter}</strong>
-                <button onClick={() => setSpam(!spam)}>{spam ? 'Remove From Spam' : 'Mark As Spam'}</button>
+            <p><strong>{commentData.commenter} </strong>
+                {
+                    user.role === 'Blogger' ?
+                        <>
+                            <button onClick={handleSpammer}>{spam ? 'Remove From Spam' : 'Mark As Spam'}</button>
+                            <button onClick={() => setTopCommenter(!topCommenter)}>{topCommenter ? 'Remove From Top Commenter' : 'Mark As Top Commenter'}</button>
+                        </> : ''
+                }
             </p>
             <Action action={{ upVote, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
             {
@@ -63,13 +78,13 @@ const Comment = ({ id, parentId, commentStatus }) => {
                     <div>
                         {commentStatus ?
                             <NewComment root={false} setShowReply={setShowReply} parentId={id}></NewComment>
-                            : <></>
+                            : ''
                         }
                         {
-                            allReply ? allReply.map(reply => <Comment key={reply} parentId={id} id={reply}></Comment>) : <></>
+                            allReply ? allReply.map(reply => <Comment key={reply} parentId={id} id={reply}></Comment>) : ''
                         }
                     </div>
-                    : <></>
+                    : ''
             }
         </div>
     );

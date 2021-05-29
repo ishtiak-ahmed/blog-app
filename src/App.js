@@ -40,7 +40,7 @@ function App() {
             <Route path='/' exact>
               {
                 user.role === 'Blogger' ?
-                  <AddBlog></AddBlog> : <></>
+                  <AddBlog></AddBlog> : ''
               }
               {
                 blogList.map(blog => <ShortBlog key={blog._id} blog={blog}></ShortBlog>)

@@ -83,13 +83,13 @@ const FullBlog = () => {
                             <>
                                 <button onClick={handleDelete}>Delete</button>
                                 <button onClick={() => setShowEdit(!showEdit)}>Edit</button> </>
-                            : <></>
+                            : ''
                     }
                     {
                         user.role === 'Blogger' ?
                             <>
                                 <button onClick={handleCommenting}>{commentStatus ? 'Turn Off Reply' : 'Turn On Reply'}</button>
-                                <button onClick={handleAllDelete}>Delete All Comment</button> </> : <></>
+                                <button onClick={handleAllDelete}>Delete All Comment</button> </> : ''
                     }
                     <Action action={{ upVote, showReply, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
                 </div>
@@ -97,7 +97,7 @@ const FullBlog = () => {
                     <img src={blog.image} alt="" />
                 </div>
                 {
-                    showEdit ? <EditBlog setShowEdit={setShowEdit} blog={blog}></EditBlog> : <></>
+                    showEdit ? <EditBlog setShowEdit={setShowEdit} blog={blog}></EditBlog> : ''
                 }
             </div>
             {
@@ -105,12 +105,12 @@ const FullBlog = () => {
                     <div>
                         {commentStatus ?
                             <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
-                            : <></>
+                            : ''
                         }
                         {
                             allReply.map(reply => <Comment parentId={id} commentStatus={commentStatus} key={reply} id={reply}></Comment>)
                         }
-                    </div> : <></>
+                    </div> : ''
             }
         </>
     );

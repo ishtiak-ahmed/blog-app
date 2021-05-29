@@ -46,4 +46,12 @@ export const updateParent = (id, child) => {
         })
 }
 
+// Mark As Spamm
+export const markAsSpam = (commenter) => {
+    console.log('added as spammer ', commenter)
+}
+// Mark As Spamm
+export const removeFromSpam = (commenter) => {
+    console.log('Removing from spammer ', commenter)
+}
 

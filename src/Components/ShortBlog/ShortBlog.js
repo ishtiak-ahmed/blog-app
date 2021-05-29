@@ -38,7 +38,7 @@ const ShortBlog = ({ blog }) => {
                             <button onClick={handleEdit}>Edit Post</button>
                             <button onClick={handleDelete}>Delete Post</button>
                         </>
-                        : <></>
+                        : ''
                 }
             </div>
 
@@ -46,7 +46,7 @@ const ShortBlog = ({ blog }) => {
                 <img src={blog.image} alt="" />
             </div>
             {
-                showEdit ? <EditBlog setShowEdit={setShowEdit} blog={blog}></EditBlog> : <></>
+                showEdit ? <EditBlog setShowEdit={setShowEdit} blog={blog}></EditBlog> : ''
             }
         </div>
     );

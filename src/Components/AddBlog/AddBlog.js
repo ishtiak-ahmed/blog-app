@@ -54,7 +54,7 @@ const AddBlog = () => {
                         {errors.content && <span>User Name is required</span>} <br />
                         <button type='submit'>Publish</button>
                     </form>
-                    : <></>
+                    : ''
             }
         </div>
     );
