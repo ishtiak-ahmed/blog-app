@@ -21,7 +21,7 @@ const NewComment = ({ parentId, setShowReply, root }) => {
         }
         console.log(comment)
         addParentReference(parentId, comment._id)
-        axios.post('http://https://ishtiak-blog.herokuapp.com/addComment', comment)
+        axios.post('https://ishtiak-blog.herokuapp.com/addComment', comment)
             .then(res => {
                 setShowReply(false)
                 setModifyCount(modifyCount + 1)

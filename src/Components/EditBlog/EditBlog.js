@@ -8,7 +8,7 @@ const EditBlog = ({ blog, setShowEdit }) => {
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
 
     const updateBlog = (data) => {
-        axios.patch(`http://https://ishtiak-blog.herokuapp.com/updateBlog/${blog._id}`, data)
+        axios.patch(`https://ishtiak-blog.herokuapp.com/updateBlog/${blog._id}`, data)
             .then(res => {
                 setModifyCount(modifyCount + 1)
                 setShowEdit(false)

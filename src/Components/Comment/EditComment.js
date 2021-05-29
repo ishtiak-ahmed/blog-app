@@ -5,7 +5,7 @@ const EditComment = ({ comment, setShowEdit }) => {
     const updateComment = (data) => {
         data.preventDefault()
         const newComment = (data.target[0].value)
-        axios.patch(`http://https://ishtiak-blog.herokuapp.com/updateComment/${comment._id}`, { comment: newComment })
+        axios.patch(`https://ishtiak-blog.herokuapp.com/updateComment/${comment._id}`, { comment: newComment })
             .then(res => {
                 console.log(res)
                 setShowEdit(false)

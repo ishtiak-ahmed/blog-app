@@ -25,7 +25,7 @@ export const deleteAllComment = (id) => {
 
 export const deleteComment = (id) => {
     console.log('deleting with id ', id)
-    axios.delete(`http://https://ishtiak-blog.herokuapp.com/deleteComment/${id}`)
+    axios.delete(`https://ishtiak-blog.herokuapp.com/deleteComment/${id}`)
         .then(res => {
             console.log(res)
         })
@@ -39,7 +39,7 @@ export const updateParent = (id, child) => {
             const newList = data.filter(id => id !== child)
             return (newList)
         }).then(newList => {
-            axios.patch(`http://https://ishtiak-blog.herokuapp.com/updateBlogParent/${id}`, { reply: newList })
+            axios.patch(`https://ishtiak-blog.herokuapp.com/updateBlogParent/${id}`, { reply: newList })
                 .then(res => {
                     console.log('delete success')
                 })
