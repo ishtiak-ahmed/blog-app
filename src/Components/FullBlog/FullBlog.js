@@ -25,6 +25,7 @@ const FullBlog = () => {
                 setAllReply(data.data.reply)
                 setDownVote(data.data.downVote)
                 setUpVote(data.data.upVote)
+                setCommentStatus(data.data.replyStatus)
                 setBlog(data.data)
             })
     }, [id])
@@ -58,7 +59,13 @@ const FullBlog = () => {
     // Handle Commenting Status
     const handleCommenting = () => {
         console.log('Toggling reply status')
-        setCommentStatus(!commentStatus)
+        const replyStatus = !commentStatus
+        setCommentStatus(replyStatus)
+        axios.patch(`http://localhost:9717/updateReplyStatus/${blog._id}`, { replyStatus: replyStatus })
+            .then(res => {
+                setModifyCount(modifyCount + 1)
+                console.log(res)
+            })
     }
 
     return (
@@ -72,7 +79,7 @@ const FullBlog = () => {
                         blog.authorId === user.userName ?
                             <>
                                 <button onClick={handleDelete}>Delete</button>
-                                <button onClick={handleCommenting}>Stop Commenting</button>
+                                <button onClick={handleCommenting}>{commentStatus ? 'Turn Off Reply' : 'Turn On Reply'}</button>
                                 <button onClick={deleteAllComment}>Delete All Comment</button>
                                 <button onClick={() => setShowEdit(!showEdit)}>Edit</button> </>
                             : <></>
