@@ -18,7 +18,7 @@ const Login = () => {
         googleLogin()
             .then(res => {
                 const email = res.email;
-                fetch('http://https://ishtiak-blog.herokuapp.com/users', {
+                fetch('https://ishtiak-blog.herokuapp.com/users', {
                     method: 'POST',
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({ "email": email })
@@ -41,7 +41,7 @@ const Login = () => {
     }
     const onSubmit = data => {
         const user = { ...newUser, role: data.role, _id: data.userName }
-        fetch('http://https://ishtiak-blog.herokuapp.com/createUser', {
+        fetch('https://ishtiak-blog.herokuapp.com/createUser', {
             method: 'POST',
             headers: { "content-type": "application/json" },
             body: JSON.stringify(user)
