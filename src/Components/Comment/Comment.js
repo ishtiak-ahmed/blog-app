@@ -4,7 +4,7 @@ import { UserContext } from '../../App';
 import Action from '../Action/Action';
 import NewComment from './NewComment';
 
-const Comment = ({ id }) => {
+const Comment = ({ id, commentStatus }) => {
     const [user] = useContext(UserContext)
     const [spam, setSpam] = useState(false)
     const [showReply, setShowReply] = useState(false)
@@ -44,7 +44,10 @@ const Comment = ({ id }) => {
             {
                 showReply ?
                     <div>
-                        <NewComment setShowReply={setShowReply} parentId={id}></NewComment>
+                        {commentStatus ?
+                            <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
+                            : <></>
+                        }
                         {
                             allReply.map(reply => <Comment key={reply} id={reply}></Comment>)
                         }

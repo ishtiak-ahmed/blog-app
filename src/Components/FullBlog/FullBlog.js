@@ -10,6 +10,7 @@ import EditBlog from '../EditBlog/EditBlog';
 const FullBlog = () => {
     const history = useHistory()
     const [user] = useContext(UserContext)
+    const [commentStatus, setCommentStatus] = useState(true)
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [showEdit, setShowEdit] = useState(false)
     const [showReply, setShowReply] = useState(false)
@@ -50,6 +51,15 @@ const FullBlog = () => {
                 history.push('/')
             })
     }
+    // Delete All Comment
+    const deleteAllComment = () => {
+        console.log('deleting all comment')
+    }
+    // Handle Commenting Status
+    const handleCommenting = () => {
+        console.log('Toggling reply status')
+        setCommentStatus(!commentStatus)
+    }
 
     return (
         <>
@@ -62,6 +72,8 @@ const FullBlog = () => {
                         blog.authorId === user.userName ?
                             <>
                                 <button onClick={handleDelete}>Delete</button>
+                                <button onClick={handleCommenting}>Stop Commenting</button>
+                                <button onClick={deleteAllComment}>Delete All Comment</button>
                                 <button onClick={() => setShowEdit(!showEdit)}>Edit</button> </>
                             : <></>
                     }
@@ -75,12 +87,16 @@ const FullBlog = () => {
                 }
             </div>
             {
-                showReply ? <div>
-                    <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
-                    {
-                        allReply.map(reply => <Comment key={reply} id={reply}></Comment>)
-                    }
-                </div> : <></>
+                showReply ?
+                    <div>
+                        {commentStatus ?
+                            <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
+                            : <></>
+                        }
+                        {
+                            allReply.map(reply => <Comment commentStatus={commentStatus} key={reply} id={reply}></Comment>)
+                        }
+                    </div> : <></>
             }
         </>
     );
