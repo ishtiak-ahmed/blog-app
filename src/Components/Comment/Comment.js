@@ -35,8 +35,7 @@ const Comment = ({ id, parentId, commentStatus }) => {
     }
     const handleDelete = () => {
         console.log('deleteing comment')
-        // deleteComment(id)
-        const newReply = allReply.filter(reply => reply._id !== id)
+        deleteComment(id)
         updateParent(parentId, id)
         setModifyCount(modifyCount + 1)
     }
