@@ -1,9 +1,11 @@
+import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
-import { UserContext } from '../../App';
+import { ModifyContext, UserContext } from '../../App';
 import EditBlog from '../EditBlog/EditBlog';
 
 const ShortBlog = ({ blog }) => {
+    const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [user] = useContext(UserContext)
     const [showEdit, setShowEdit] = useState(false)
     const history = useHistory()
@@ -15,8 +17,13 @@ const ShortBlog = ({ blog }) => {
         setShowEdit(true)
     }
     const handleDelete = () => {
-        console.log(blog._id)
-        setShowEdit(true)
+        const url = `http://localhost:9717/deleteBlog/${blog._id}`
+        console.log(url)
+        axios.delete(url)
+            .then(result => {
+                setModifyCount(modifyCount + 1)
+                console.log(result)
+            })
     }
     return (
         <div className='shortblog'>

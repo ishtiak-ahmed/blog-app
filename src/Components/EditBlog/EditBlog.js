@@ -8,7 +8,6 @@ const EditBlog = ({ blog, setShowEdit }) => {
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
 
     const updateBlog = (data) => {
-        console.log(data)
         axios.patch(`http://localhost:9717/updateBlog/${blog._id}`, data)
             .then(res => {
                 setModifyCount(modifyCount + 1)

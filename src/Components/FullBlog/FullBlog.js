@@ -1,14 +1,16 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router';
-import { UserContext } from '../../App';
+import { useHistory, useParams } from 'react-router';
+import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
 import Comment from '../Comment/Comment';
 import NewComment from '../Comment/NewComment';
 import EditBlog from '../EditBlog/EditBlog';
 
 const FullBlog = () => {
+    const history = useHistory()
     const [user] = useContext(UserContext)
+    const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [showEdit, setShowEdit] = useState(false)
     const [showReply, setShowReply] = useState(false)
     const [allReply, setAllReply] = useState([])
@@ -37,6 +39,18 @@ const FullBlog = () => {
     const addDownVote = () => {
         setDownVote([...downVote, user.fullName])
     }
+
+    const handleDelete = () => {
+        const url = `http://localhost:9717/deleteBlog/${blog._id}`
+        console.log(url)
+        axios.delete(url)
+            .then(result => {
+                setModifyCount(modifyCount + 1)
+                console.log(result)
+                history.push('/')
+            })
+    }
+
     return (
         <>
             <div className='blog-post'>
@@ -44,8 +58,13 @@ const FullBlog = () => {
                     <h2>{blog.title}</h2>
                     <h4>{blog.author} <p>at {blog.time}, {blog.date}</p></h4>
                     <p>{blog.content}</p>
-                    <button>Delete</button>
-                    <button onClick={() => setShowEdit(!showEdit)}>Edit</button>
+                    {
+                        blog.authorId === user.userName ?
+                            <>
+                                <button onClick={handleDelete}>Delete</button>
+                                <button onClick={() => setShowEdit(!showEdit)}>Edit</button> </>
+                            : <></>
+                    }
                     <Action action={{ upVote, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
                 </div>
                 <div>
