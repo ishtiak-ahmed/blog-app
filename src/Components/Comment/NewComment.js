@@ -11,6 +11,7 @@ const NewComment = ({ parentId, setShowReply, root }) => {
         const comment = {
             _id: `a${new Date().getTime()}`,
             commenter: user.fullName,
+            commenterId: user.userName,
             comment: commentText,
             time: (new Date()).toLocaleTimeString,
             date: (new Date()).toLocaleDateString,
@@ -23,6 +24,7 @@ const NewComment = ({ parentId, setShowReply, root }) => {
         axios.post('http://localhost:9717/addComment', comment)
             .then(res => {
                 setShowReply(false)
+                setModifyCount(modifyCount + 1)
                 // setTimeout(setShowReply(true), 6000)
             })
     }

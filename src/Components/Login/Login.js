@@ -26,12 +26,9 @@ const Login = () => {
                     .then(res => res.json())
                     .then(result => {
                         if (result) {
-                            const userName = result._id;
-                            const role = result.role;
-                            const photo = result.photo;
-                            const email = result.email;
-                            const fullName = result.fullName;
-                            setUser({ userName, role, photo, fullName, email })
+
+                            console.log(user)
+                            setUser({ ...result, userName: result._id })
                             setModifyCount(modifyCount + 1)
                             history.push(from)
 

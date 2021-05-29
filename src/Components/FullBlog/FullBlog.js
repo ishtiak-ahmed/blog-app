@@ -29,7 +29,7 @@ const FullBlog = () => {
                 setCommentStatus(data.data.replyStatus)
                 setBlog(data.data)
             })
-    }, [modifyCount])
+    }, [modifyCount, id])
     const toggleReply = () => {
         setShowReply(!showReply)
     }
@@ -108,7 +108,7 @@ const FullBlog = () => {
                             : <></>
                         }
                         {
-                            allReply.map(reply => <Comment commentStatus={commentStatus} key={reply} id={reply}></Comment>)
+                            allReply.map(reply => <Comment parentId={id} commentStatus={commentStatus} key={reply} id={reply}></Comment>)
                         }
                     </div> : <></>
             }

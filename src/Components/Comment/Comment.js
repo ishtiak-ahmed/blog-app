@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../App';
+import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
+import { deleteComment, updateParent } from '../BloggerAction/BloggerAction';
 import NewComment from './NewComment';
 
-const Comment = ({ id, commentStatus }) => {
+const Comment = ({ id, parentId, commentStatus }) => {
     const [user] = useContext(UserContext)
+    const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [spam, setSpam] = useState(false)
     const [showReply, setShowReply] = useState(false)
     const [commentData, setCommnetData] = useState({})
@@ -16,10 +18,9 @@ const Comment = ({ id, commentStatus }) => {
         axios(`http://localhost:9717/getComment/${id}`)
             .then(data => {
                 setCommnetData(data.data)
-                // const replies = data.data.reply
                 setReply(data.data.reply)
             })
-    }, [showReply])
+    }, [showReply, id])
     const toggleReply = () => {
         setShowReply(!showReply)
     }
@@ -29,9 +30,25 @@ const Comment = ({ id, commentStatus }) => {
     const addDownVote = () => {
         setDownVote([...downVote, user.fullName])
     }
+    const handleEdit = () => {
+        console.log('editing comment')
+    }
+    const handleDelete = () => {
+        console.log('deleteing comment')
+        // deleteComment(id)
+        const newReply = allReply.filter(reply => reply._id !== id)
+        updateParent(parentId, id)
+        setModifyCount(modifyCount + 1)
+    }
     return (
         <div className='comment'>
-            <p>{commentData.comment}</p>
+            <p>{commentData.comment}
+                {commentData.commenterId === user.userName ?
+                    <>
+                        <button onClick={handleEdit}>Edit</button>
+                        <button onClick={handleDelete}>Delete</button>
+                    </> : <></>}
+            </p>
             <p><strong>{commentData.commenter}</strong>
                 <button onClick={() => setSpam(!spam)}>{spam ? 'Remove From Spam' : 'Mark As Spam'}</button>
             </p>
@@ -44,7 +61,7 @@ const Comment = ({ id, commentStatus }) => {
                             : <></>
                         }
                         {
-                            allReply ? allReply.map(reply => <Comment key={reply} id={reply}></Comment>) : <></>
+                            allReply ? allReply.map(reply => <Comment key={reply} parentId={id} id={reply}></Comment>) : <></>
                         }
                     </div>
                     : <></>
