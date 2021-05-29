@@ -5,9 +5,11 @@ import { UserContext } from '../../App';
 import Action from '../Action/Action';
 import Comment from '../Comment/Comment';
 import NewComment from '../Comment/NewComment';
+import EditBlog from '../EditBlog/EditBlog';
 
 const FullBlog = () => {
     const [user] = useContext(UserContext)
+    const [showEdit, setShowEdit] = useState(false)
     const [showReply, setShowReply] = useState(false)
     const [allReply, setAllReply] = useState([])
     const [upVote, setUpVote] = useState([])
@@ -42,11 +44,16 @@ const FullBlog = () => {
                     <h2>{blog.title}</h2>
                     <h4>{blog.author} <p>at {blog.time}, {blog.date}</p></h4>
                     <p>{blog.content}</p>
+                    <button>Delete</button>
+                    <button onClick={() => setShowEdit(!showEdit)}>Edit</button>
                     <Action action={{ upVote, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
                 </div>
                 <div>
                     <img src={blog.image} alt="" />
                 </div>
+                {
+                    showEdit ? <EditBlog setShowEdit={setShowEdit} blog={blog}></EditBlog> : <></>
+                }
             </div>
             {
                 showReply ? <div>

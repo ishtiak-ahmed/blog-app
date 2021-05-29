@@ -1,18 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router';
 import { UserContext } from '../../App';
+import EditBlog from '../EditBlog/EditBlog';
 
 const ShortBlog = ({ blog }) => {
     const [user] = useContext(UserContext)
+    const [showEdit, setShowEdit] = useState(false)
     const history = useHistory()
     const readFull = () => {
         history.push(`/blog/${blog._id}`)
     }
     const handleEdit = () => {
         console.log(blog._id)
+        setShowEdit(true)
     }
     const handleDelete = () => {
         console.log(blog._id)
+        setShowEdit(true)
     }
     return (
         <div className='shortblog'>
@@ -34,6 +38,9 @@ const ShortBlog = ({ blog }) => {
             <div>
                 <img src={blog.image} alt="" />
             </div>
+            {
+                showEdit ? <EditBlog setShowEdit={setShowEdit} blog={blog}></EditBlog> : <></>
+            }
         </div>
     );
 };

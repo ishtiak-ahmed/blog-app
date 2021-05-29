@@ -1,4 +1,10 @@
 /*  Header */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 header {
   max-width: 1200px;
   margin: auto;
@@ -67,7 +73,7 @@ img {
 }
 .addblog input,
 .addblog textarea {
-  width: 70%;
+  width: 100%;
   padding: 5px 10px;
   border-radius: 5px;
   outline: none;
@@ -75,4 +81,43 @@ img {
 .addblog h3 {
   text-align: center;
   cursor: pointer;
+}
+.addblog span {
+  color: red;
+}
+
+.addblog button {
+  color: #fff;
+  background-color: green;
+  outline: none;
+  padding: 0.6em 2em;
+  margin: 1em 0;
+  border-radius: 5px;
+  border: none;
+}
+
+.editblog {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+}
+.editblog > div {
+  min-width: 400px;
+  min-height: 300px;
+  padding: 2em;
+  background-color: #fff;
+  border-radius: 5px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 1em;
+  justify-content: space-between;
+}
+input,
+textarea {
+  width: 100%;
 }

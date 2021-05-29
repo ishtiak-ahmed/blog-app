@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
 import { UserContext } from '../../App';
-import Login from '../Login/Login';
 const AddBlog = () => {
     const [showForm, setShowForm] = useState(false)
     const [user] = useContext(UserContext)
@@ -46,11 +45,13 @@ const AddBlog = () => {
             {
                 showForm ?
                     <form onSubmit={handleSubmit(addBlog)}>
-                        <p>Title: <input type="text" {...register('title', { required: true })} /></p>
-
-                        <p>Tag: <input type="text" {...register('tag', { required: true })} /></p>
+                        <p>Title: <br /><input type="text" {...register('title', { required: true })} /></p>
+                        {errors.title && <span>Title is required</span>} <br />
+                        <p>Tag: <br /><input type="text" {...register('tag', { required: true })} /></p>
+                        {errors.tag && <span>Tag is required</span>} <br />
                         <p>Thumbnail: <input type="file" onChange={uploadImage} /></p>
-                        <p>Content: <textarea type="text" {...register('content', { required: true })} /></p>
+                        <p>Content: <br /><textarea type="text" {...register('content', { required: true })} /></p>
+                        {errors.content && <span>User Name is required</span>} <br />
                         <button type='submit'>Publish</button>
                     </form>
                     : <></>
