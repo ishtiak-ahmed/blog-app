@@ -3,10 +3,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
 import { deleteComment, updateParent } from '../BloggerAction/BloggerAction';
+import EditComment from './EditComment';
 import NewComment from './NewComment';
 
 const Comment = ({ id, parentId, commentStatus }) => {
     const [user] = useContext(UserContext)
+    const [showEdit, setShowEdit] = useState(false)
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [spam, setSpam] = useState(false)
     const [showReply, setShowReply] = useState(false)
@@ -32,6 +34,7 @@ const Comment = ({ id, parentId, commentStatus }) => {
     }
     const handleEdit = () => {
         console.log('editing comment')
+        setShowEdit(!showEdit)
     }
     const handleDelete = () => {
         console.log('deleteing comment')
@@ -48,6 +51,9 @@ const Comment = ({ id, parentId, commentStatus }) => {
                         <button onClick={handleDelete}>Delete</button>
                     </> : <></>}
             </p>
+            {
+                showEdit ? <EditComment setShowEdit={setShowEdit} comment={commentData}></EditComment> : <></>
+            }
             <p><strong>{commentData.commenter}</strong>
                 <button onClick={() => setSpam(!spam)}>{spam ? 'Remove From Spam' : 'Mark As Spam'}</button>
             </p>

@@ -137,3 +137,21 @@ input,
 textarea {
   width: 100%;
 }
+
+.editcomment {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: grid;
+  place-items: center;
+}
+.editcomment > div {
+  min-width: 400px;
+  min-height: 200px;
+  background-color: #fff;
+  padding: 2em;
+  border-radius: 10px;
+}
