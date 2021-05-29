@@ -13,42 +13,45 @@ import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import Login from './Components/Login/Login';
 
 export const UserContext = createContext()
+export const ModifyContext = createContext()
 function App() {
+  const [modifyCount, setModifyCount] = useState(0)
   const [user, setUser] = useState({})
   const [blogList, setBlogList] = useState([])
   useEffect(() => {
     fetch('http://localhost:9717/getBlogs')
       .then(res => res.json())
       .then(data => setBlogList(data))
-  }, [])
+  }, [modifyCount])
   return (
     <UserContext.Provider value={[user, setUser]}>
-      <Router>
-        <header>
-
-          <h2><Link to='/'> Ishtiak blog</Link></h2>
-          <div>
-            <img src={user.photo} alt="" /><h5>{user.fullName} {user.userName}</h5>
-          </div>
-        </header>
-        <Switch>
-          <PrivateRoute path='/blog/:id'>
-            <FullBlog></FullBlog>
-          </PrivateRoute>
-          <Route path='/' exact>
-            {
-              user.role === 'Blogger' ?
-                <AddBlog></AddBlog> : <></>
-            }
-            {
-              blogList.map(blog => <ShortBlog key={blog._id} blog={blog}></ShortBlog>)
-            }
-          </Route>
-          <Route path='/login'>
-            <Login></Login>
-          </Route>
-        </Switch>
-      </Router>
+      <ModifyContext.Provider value={[modifyCount, setModifyCount]}>
+        <Router>
+          <header>
+            <h2><Link to='/'> Ishtiak blog</Link></h2>
+            <div>
+              <img src={user.photo} alt="" /><h5>{user.fullName} {user.userName}</h5>
+            </div>
+          </header>
+          <Switch>
+            <PrivateRoute path='/blog/:id'>
+              <FullBlog></FullBlog>
+            </PrivateRoute>
+            <Route path='/' exact>
+              {
+                user.role === 'Blogger' ?
+                  <AddBlog></AddBlog> : <></>
+              }
+              {
+                blogList.map(blog => <ShortBlog key={blog._id} blog={blog}></ShortBlog>)
+              }
+            </Route>
+            <Route path='/login'>
+              <Login></Login>
+            </Route>
+          </Switch>
+        </Router>
+      </ModifyContext.Provider>
     </UserContext.Provider>
   );
 }

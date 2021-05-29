@@ -1,14 +1,17 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { ModifyContext } from '../../App';
 
 const EditBlog = ({ blog, setShowEdit }) => {
     const { register, handleSubmit } = useForm();
+    const [modifyCount, setModifyCount] = useContext(ModifyContext)
 
     const updateBlog = (data) => {
         console.log(data)
         axios.patch(`http://localhost:9717/updateBlog/${blog._id}`, data)
             .then(res => {
+                setModifyCount(modifyCount + 1)
                 setShowEdit(false)
             })
     }
