@@ -1,10 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router';
-import { UserContext } from '../../App';
+import { ModifyContext, UserContext } from '../../App';
 import { googleLogin } from './Config/LoginManager';
 import { useForm } from "react-hook-form";
 
 const Login = () => {
+    const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [user, setUser] = useContext(UserContext)
     const [newUser, setNewUser] = useState({})
     const [registerForm, setRegisterForm] = useState(false)
@@ -31,6 +32,7 @@ const Login = () => {
                             const email = result.email;
                             const fullName = result.fullName;
                             setUser({ userName, role, photo, fullName, email })
+                            setModifyCount(modifyCount + 1)
                             history.push(from)
 
                         } else {
@@ -52,6 +54,7 @@ const Login = () => {
                 if (data) {
                     console.log(data)
                     setUser(user)
+                    setModifyCount(modifyCount + 1)
                     history.push(from)
                 }
             })

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
-import { UserContext } from '../../App';
+import { ModifyContext, UserContext } from '../../App';
 
 const NewComment = ({ parentId, setShowReply, root }) => {
+    const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [user] = useContext(UserContext)
     const [commentText, setComment] = useState('')
     const addComment = (e) => {

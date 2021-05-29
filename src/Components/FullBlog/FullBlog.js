@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
+import { deleteAllComment } from '../BloggerAction/BloggerAction';
 import Comment from '../Comment/Comment';
 import NewComment from '../Comment/NewComment';
 import EditBlog from '../EditBlog/EditBlog';
@@ -28,7 +29,7 @@ const FullBlog = () => {
                 setCommentStatus(data.data.replyStatus)
                 setBlog(data.data)
             })
-    }, [id])
+    }, [modifyCount])
     const toggleReply = () => {
         setShowReply(!showReply)
     }
@@ -53,8 +54,10 @@ const FullBlog = () => {
             })
     }
     // Delete All Comment
-    const deleteAllComment = () => {
+    const handleAllDelete = () => {
         console.log('deleting all comment')
+        deleteAllComment(blog._id)
+        setModifyCount(modifyCount + 1)
     }
     // Handle Commenting Status
     const handleCommenting = () => {
@@ -86,9 +89,9 @@ const FullBlog = () => {
                         user.role === 'Blogger' ?
                             <>
                                 <button onClick={handleCommenting}>{commentStatus ? 'Turn Off Reply' : 'Turn On Reply'}</button>
-                                <button onClick={deleteAllComment}>Delete All Comment</button> </> : <></>
+                                <button onClick={handleAllDelete}>Delete All Comment</button> </> : <></>
                     }
-                    <Action action={{ upVote, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
+                    <Action action={{ upVote, showReply, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
                 </div>
                 <div>
                     <img src={blog.image} alt="" />

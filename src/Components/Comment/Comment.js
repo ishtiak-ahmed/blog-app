@@ -16,13 +16,8 @@ const Comment = ({ id, commentStatus }) => {
         axios(`http://localhost:9717/getComment/${id}`)
             .then(data => {
                 setCommnetData(data.data)
-                const replies = data.data.reply
-                let sorted = []
-                replies.forEach(reply => {
-                    sorted.unshift(reply)
-                });
-                console.log(sorted)
-                setReply(sorted)
+                // const replies = data.data.reply
+                setReply(data.data.reply)
             })
     }, [showReply])
     const toggleReply = () => {
@@ -45,11 +40,11 @@ const Comment = ({ id, commentStatus }) => {
                 showReply ?
                     <div>
                         {commentStatus ?
-                            <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
+                            <NewComment root={false} setShowReply={setShowReply} parentId={id}></NewComment>
                             : <></>
                         }
                         {
-                            allReply.map(reply => <Comment key={reply} id={reply}></Comment>)
+                            allReply ? allReply.map(reply => <Comment key={reply} id={reply}></Comment>) : <></>
                         }
                     </div>
                     : <></>

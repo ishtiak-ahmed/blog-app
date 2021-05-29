@@ -29,8 +29,8 @@ function App() {
         <Router>
           <header>
             <h2><Link to='/'> Ishtiak blog</Link></h2>
-            <div>
-              <img src={user.photo} alt="" /><h5>{user.fullName} {user.userName}</h5>
+            <div className="user-avater">
+              <img src={user.photo} alt="" /><h5>{user.fullName}</h5>
             </div>
           </header>
           <Switch>
