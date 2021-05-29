@@ -1,47 +1,61 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import { UserContext } from '../../App';
+import Action from '../Action/Action';
 import Comment from '../Comment/Comment';
 import NewComment from '../Comment/NewComment';
 
 const FullBlog = () => {
+    const [user] = useContext(UserContext)
     const [showReply, setShowReply] = useState(false)
     const [allReply, setAllReply] = useState([])
+    const [upVote, setUpVote] = useState([])
+    const [downVote, setDownVote] = useState([])
     const { id } = useParams()
     const [blog, setBlog] = useState({})
     useEffect(() => {
         axios(`http://localhost:9717/blog/${id}`)
             .then(data => {
                 setAllReply(data.data.reply)
+                setDownVote(data.data.downVote)
+                setUpVote(data.data.upVote)
                 setBlog(data.data)
             })
     }, [id])
     const toggleReply = () => {
         setShowReply(!showReply)
     }
+    const addUpVote = () => {
+        const newUpVote = [...upVote, user.userName]
+        axios.patch(`http://localhost:9717/blogUpVote/${id}`, { upVote: newUpVote })
+            .then(data => console.log(data))
+        setUpVote([...upVote, user.fullName])
+    }
+    const addDownVote = () => {
+        setDownVote([...downVote, user.fullName])
+    }
     return (
         <>
-            <div style={{ display: 'flex' }}>
-                <div>
+            <div className='blog-post'>
+                <div >
                     <h2>{blog.title}</h2>
-                    <h4>{blog.author}</h4>
+                    <h4>{blog.author} <p>at {blog.time}, {blog.date}</p></h4>
                     <p>{blog.content}</p>
-                    <p>{allReply.length}</p>
-
-                    {/* <span>UpVote: {blog.upVote.length}</span> */}
-                    {/* <span>DownVote: {blog.downVote.length}</span> */}
-                    <button onClick={toggleReply}>Reply</button>
+                    <Action action={{ upVote, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
                 </div>
                 <div>
                     <img src={blog.image} alt="" />
                 </div>
             </div>
-            <div>
-                <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
-                {
-                    allReply.map(reply => <Comment key={reply} id={reply}></Comment>)
-                }
-            </div>
+            {
+                showReply ? <div>
+                    <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
+                    {
+                        allReply.map(reply => <Comment key={reply} id={reply}></Comment>)
+                    }
+                </div> : <></>
+            }
         </>
     );
 };

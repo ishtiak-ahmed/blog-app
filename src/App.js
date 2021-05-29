@@ -9,10 +9,12 @@ import {
   Link
 } from "react-router-dom";
 import FullBlog from './Components/FullBlog/FullBlog';
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
+import Login from './Components/Login/Login';
 
 export const UserContext = createContext()
 function App() {
-  const [user, setUser] = useState({ fullName: 'Ishtiak Ahmed' })
+  const [user, setUser] = useState({})
   const [blogList, setBlogList] = useState([])
   useEffect(() => {
     fetch('http://localhost:9717/getBlogs')
@@ -26,18 +28,24 @@ function App() {
 
           <h2><Link to='/'> Ishtiak blog</Link></h2>
           <div>
-            <img src={user.photo} alt="" /><h5>{user.fullName}</h5>
+            <img src={user.photo} alt="" /><h5>{user.fullName} {user.userName}</h5>
           </div>
         </header>
         <Switch>
-          <Route path='/blog/:id'>
+          <PrivateRoute path='/blog/:id'>
             <FullBlog></FullBlog>
-          </Route>
+          </PrivateRoute>
           <Route path='/' exact>
-            <AddBlog></AddBlog>
+            {
+              user.role === 'Blogger' ?
+                <AddBlog></AddBlog> : <></>
+            }
             {
               blogList.map(blog => <ShortBlog key={blog._id} blog={blog}></ShortBlog>)
             }
+          </Route>
+          <Route path='/login'>
+            <Login></Login>
           </Route>
         </Switch>
       </Router>
