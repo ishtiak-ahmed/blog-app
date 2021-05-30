@@ -65,7 +65,7 @@ header {
   overflow: hidden;
 }
 .blog-img {
-  max-height: 300px;
+  height: 250px;
 }
 img {
   max-width: 100%;

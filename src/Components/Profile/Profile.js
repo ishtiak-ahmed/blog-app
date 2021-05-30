@@ -6,7 +6,7 @@ const Profile = () => {
     const { userName } = useParams()
     const [profileInfo, setProfileInfo] = useState({})
     useEffect(() => {
-        fetch(`http://localhost:9717/profile/${userName}`, {
+        fetch(`https://ishtiak-blog.herokuapp.com/profile/${userName}`, {
             method: 'GET'
         }).then(res => res.json())
             .then(data => {
