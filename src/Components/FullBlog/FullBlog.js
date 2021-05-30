@@ -8,9 +8,13 @@ import { deleteAllComment } from '../BloggerAction/BloggerAction';
 import Comment from '../Comment/Comment';
 import NewComment from '../Comment/NewComment';
 import EditBlog from '../EditBlog/EditBlog';
+import Pagination from '../Pagination/Pagination';
 
 const FullBlog = () => {
     const history = useHistory()
+
+    const [currentPage, setCurrentPage] = useState(1)
+
     const [user] = useContext(UserContext)
     const [commentStatus, setCommentStatus] = useState(true)
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
@@ -21,6 +25,7 @@ const FullBlog = () => {
     const [downVote, setDownVote] = useState([])
     const { id } = useParams()
     const [blog, setBlog] = useState({})
+    const currentComment = allReply.slice(((currentPage * 5) - 5), currentPage * 5);
     useEffect(() => {
         axios(`https://ishtiak-blog.herokuapp.com/blog/${id}`)
             .then(data => {
@@ -44,7 +49,6 @@ const FullBlog = () => {
         setDownVote([...downVote, user.fullName])
         const newDownVote = [...downVote, user.userName]
         axios.patch(`https://ishtiak-blog.herokuapp.com/updateVote/${id}`, { downVote: newDownVote })
-            .then(data => console.log(data))
     }
 
     const handleDelete = () => {
@@ -106,13 +110,14 @@ const FullBlog = () => {
             </div>
             {
                 showReply ?
-                    <div>
+                    <div className='comment-aria'>
+                        <Pagination postPerPage={5} totalPosts={allReply.length} setCurrentPage={setCurrentPage}></Pagination>
                         {commentStatus ?
                             <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
                             : ''
                         }
                         {
-                            allReply.map(reply => <Comment parentId={id} commentStatus={commentStatus} key={reply} nested={false} authorId={blog.authorId} id={reply}></Comment>)
+                            currentComment.map(reply => <Comment parentId={id} commentStatus={commentStatus} key={reply} nested={false} authorId={blog.authorId} id={reply}></Comment>)
                         }
                     </div> : ''
             }

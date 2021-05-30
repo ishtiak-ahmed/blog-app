@@ -189,4 +189,5 @@ textarea {
   padding: 5px 10px;
   border: 1px solid lightgray;
   list-style-type: none;
+  cursor: pointer;
 }
