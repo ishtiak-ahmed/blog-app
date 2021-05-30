@@ -17,16 +17,18 @@
     [x] Delete all comment of a post
     [x] Edit Comment
     [x] Delete Comment
-    [ ] mark as spamm
+    [x] mark as spamm
     [ ] schedule comment turn off
-    [ ] Feature comment
-    [ ] banned spammer from app
+        * I will do it next time, In Sha Allah
+    [x] Feature comment
+    [x] banned spammer from app
     [x] Comment nesting done
-    [ ] Paginate Blog Post and Comment
+    [x] Paginate Blog Post and Comment
     [ ] Sort Post and Comment by time
+        * I will do it next time, In Sha Allah
 
 ### Hosting and Server
 
     [x] Firebase client hosting
-    [ ] Heroku Server Hosting
+    [x] Heroku Server Hosting
     [ ] Netlify Hosting
