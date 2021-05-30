@@ -1,9 +1,10 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import { UserContext } from '../../App';
+import { ModifyContext, UserContext } from '../../App';
 const AddBlog = () => {
     const [showForm, setShowForm] = useState(false)
+    const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [user] = useContext(UserContext)
     const [imageUrl, setImageUrl] = useState('')
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -20,6 +21,7 @@ const AddBlog = () => {
         axios.post(`https://ishtiak-blog.herokuapp.com/addBlog`, blog)
             .then(data => {
                 console.log(data)
+                setModifyCount(modifyCount + 1)
             })
     }
     const uploadImage = (e) => {
