@@ -25,7 +25,7 @@ const ShortBlog = ({ blog }) => {
         <div className='shortblog'>
             <div className="info">
                 <h2><Link to={`/blog/${blog._id}`}>{blog.title}</Link></h2>
-                <h5><Link to={`/profile/${blog.authorId}`}>{blog.author} </Link></h5>
+                <h5><Link to={`/profile/${blog.authorId}`}>{blog.author}, at {blog.time} {blog.date}</Link></h5>
                 <p>{blog.content}</p>
                 <button ><Link to={`/blog/${blog._id}`}> Read more </Link></button>
                 {

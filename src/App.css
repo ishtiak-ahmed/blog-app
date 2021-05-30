@@ -33,6 +33,7 @@ header {
 #root {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 1em 3em;
 }
 
 .user-avater {
@@ -180,4 +181,12 @@ textarea {
   background-color: #fff;
   padding: 2em;
   border-radius: 10px;
+}
+
+.navigation li {
+  display: inline-block;
+  margin-left: 1em;
+  padding: 5px 10px;
+  border: 1px solid lightgray;
+  list-style-type: none;
 }

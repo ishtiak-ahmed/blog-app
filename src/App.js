@@ -12,13 +12,24 @@ import FullBlog from './Components/FullBlog/FullBlog';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import Login from './Components/Login/Login';
 import Profile from './Components/Profile/Profile';
+import Pagination from './Components/Pagination/Pagination';
 
 export const UserContext = createContext()
 export const ModifyContext = createContext()
 function App() {
   const [modifyCount, setModifyCount] = useState(0)
-  const [user, setUser] = useState({})
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postPerPage, setPostPerPage] = useState(5)
   const [blogList, setBlogList] = useState([])
+
+  const [user, setUser] = useState({})
+
+  const indexOfLastPost = currentPage * 5;
+  const indexOfFirstPost = indexOfLastPost - postPerPage;
+
+  const currenPosts = blogList.slice(indexOfFirstPost, indexOfLastPost)
+
   useEffect(() => {
     fetch('https://ishtiak-blog.herokuapp.com/getBlogs')
       .then(res => res.json())
@@ -47,8 +58,9 @@ function App() {
                   <AddBlog></AddBlog> : ''
               }
               {
-                blogList.map(blog => <ShortBlog key={blog._id} blog={blog}></ShortBlog>)
+                currenPosts.map(blog => <ShortBlog key={blog._id} blog={blog}></ShortBlog>)
               }
+              <Pagination totalPosts={blogList.length} setCurrentPage={setCurrentPage} postPerPage={postPerPage}></Pagination>
             </Route>
             <Route path='/login'>
               <Login></Login>
