@@ -86,8 +86,22 @@ img {
 
 .blog-post {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
+  grid-template-columns: 1fr;
 }
+.blog-post h2 {
+  font-size: 50px;
+}
+
+.blog-post .feature-image {
+  height: 350px;
+  width: 100%;
+  overflow: hidden;
+}
+.feature-image img {
+  width: 100%;
+  height: auto;
+}
+
 .shortblog p {
   overflow: hidden;
   height: 130px;
@@ -190,4 +204,11 @@ textarea {
   border: 1px solid lightgray;
   list-style-type: none;
   cursor: pointer;
+}
+
+.comment-area {
+  border: 1px solid lightgray;
+  padding: 1em;
+  border-radius: 10px;
+  margin: 1em auto;
 }

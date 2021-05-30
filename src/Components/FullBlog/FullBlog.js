@@ -85,7 +85,6 @@ const FullBlog = () => {
                 <div >
                     <h2>{blog.title}</h2>
                     <h4><Link to={`/profile/${blog.authorId}`}>{blog.author} </Link> <p>at {blog.time}, {blog.date}</p></h4>
-                    <p>{blog.content}</p>
                     {
                         blog.authorId === user.userName ?
                             <>
@@ -99,10 +98,12 @@ const FullBlog = () => {
                                 <button onClick={handleCommenting}>{commentStatus ? 'Turn Off Reply' : 'Turn On Reply'}</button>
                                 <button onClick={handleAllDelete}>Delete All Comment</button> </> : ''
                     }
+                    <div className="feature-image">
+                        <img src={blog.image} alt="" />
+                    </div>
+
+                    <p>{blog.content}</p>
                     <Action action={{ upVote, showReply, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
-                </div>
-                <div>
-                    <img src={blog.image} alt="" />
                 </div>
                 {
                     showEdit ? <EditBlog setShowEdit={setShowEdit} blog={blog}></EditBlog> : ''
@@ -110,7 +111,7 @@ const FullBlog = () => {
             </div>
             {
                 showReply ?
-                    <div className='comment-aria'>
+                    <div className='comment-area'>
                         <Pagination postPerPage={5} totalPosts={allReply.length} setCurrentPage={setCurrentPage}></Pagination>
                         {commentStatus ?
                             <NewComment root={true} setShowReply={setShowReply} parentId={id}></NewComment>
