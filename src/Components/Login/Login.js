@@ -26,7 +26,6 @@ const Login = () => {
                     .then(res => res.json())
                     .then(result => {
                         if (result) {
-
                             console.log(user)
                             setUser({ ...result, userName: result._id })
                             setModifyCount(modifyCount + 1)

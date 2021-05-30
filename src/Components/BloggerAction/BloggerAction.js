@@ -45,7 +45,7 @@ export const updateParent = (id, child) => {
                 })
         })
 }
-export const updateParentToBlank = (id) => {
+const updateParentToBlank = (id) => {
     axios.patch(`https://ishtiak-blog.herokuapp.com/updateBlogParent/${id}`, { reply: [] })
         .then(res => {
             console.log('delete success')
@@ -78,3 +78,16 @@ export const removeFromSpam = (commenter) => {
     console.log('Removing from spammer ', commenter)
 }
 
+
+//  Feature Comment
+export const toggleFeatureComment = (comment) => {
+    axios(`https://ishtiak-blog.herokuapp.com/getComment/${comment}`)
+        .then(res => {
+            const status = res.data.feature
+            // axios.patch(`http://localhost:9717/toggleFeatureComment/${comment}`, { feature: !status })
+            axios.patch(`https://ishtiak-blog.herokuapp.com/toggleFeatureComment/${comment}`, { feature: !status })
+                .then(res => {
+                    console.log(res)
+                })
+        })
+}

@@ -3,13 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
-import { deleteComment, updateNested, markAsSpam, removeFromSpam, updateParent } from '../BloggerAction/BloggerAction';
+import { deleteComment, updateNested, markAsSpam, removeFromSpam, updateParent, toggleFeatureComment } from '../BloggerAction/BloggerAction';
 import EditComment from './EditComment';
 import NewComment from './NewComment';
 
 const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
     const [user] = useContext(UserContext)
-    const [topCommenter, setTopCommenter] = useState(false)
+    const [featureComment, setFeatureComment] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [spam, setSpam] = useState(false)
@@ -22,6 +22,7 @@ const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
         axios(`https://ishtiak-blog.herokuapp.com/getComment/${id}`)
             .then(data => {
                 setCommnetData(data.data)
+                setFeatureComment(data.data.feature)
                 setReply(data.data.reply)
             })
     }, [showReply, id, modifyCount])
@@ -58,6 +59,10 @@ const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
         }
         setSpam(!spam)
     }
+    const handleFeature = () => {
+        setFeatureComment(!featureComment)
+        toggleFeatureComment(id)
+    }
     return (
         <div className='comment'>
             <p>{commentData.comment}
@@ -78,7 +83,7 @@ const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
                         </> : ''
                 }
                 {
-                    user.userName === authorId ? <button onClick={() => setTopCommenter(!topCommenter)} > {topCommenter ? 'Remove From Top Commenter' : 'Mark As Top Commenter'}</button> : ''
+                    user.userName === authorId ? <button onClick={handleFeature} > {featureComment ? 'Remove Feature Comment' : 'Mark As Feature Comment'}</button> : ''
                 }
             </p>
             <Action action={{ upVote, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
