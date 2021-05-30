@@ -27,9 +27,13 @@ const Login = () => {
                     .then(result => {
                         if (result) {
                             console.log(user)
-                            setUser({ ...result, userName: result._id })
-                            setModifyCount(modifyCount + 1)
-                            history.push(from)
+                            if (result.spamcount > 1) {
+                                alert('Sorry you are banned from this site for spamming. Contact us to remove your name from spammer.')
+                            } else {
+                                setUser({ ...result, userName: result._id })
+                                setModifyCount(modifyCount + 1)
+                                history.push(from)
+                            }
 
                         } else {
                             setNewUser({ fullName: res.displayName, email: res.email, photo: res.photoURL })
@@ -39,7 +43,7 @@ const Login = () => {
             })
     }
     const onSubmit = data => {
-        const user = { ...newUser, role: data.role, _id: data.userName }
+        const user = { ...newUser, role: data.role, _id: data.userName, spamcount: 0 }
         fetch('https://ishtiak-blog.herokuapp.com/createUser', {
             method: 'POST',
             headers: { "content-type": "application/json" },

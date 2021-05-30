@@ -19,13 +19,11 @@ const NewComment = ({ parentId, setShowReply, root }) => {
             upVote: [],
             downVote: []
         }
-        console.log(comment)
         addParentReference(parentId, comment._id)
         axios.post('https://ishtiak-blog.herokuapp.com/addComment', comment)
             .then(res => {
                 setShowReply(false)
                 setModifyCount(modifyCount + 1)
-                // setTimeout(setShowReply(true), 6000)
             })
     }
     const handelChange = (e) => {
@@ -41,7 +39,6 @@ const NewComment = ({ parentId, setShowReply, root }) => {
             .then(data => {
                 const reply = data.data.reply;
                 const newReply = [...reply, child]
-                console.log(newReply)
                 axios.patch(updateUri, { reply: newReply })
                     .catch(err => console.log(err))
             })

@@ -75,7 +75,7 @@ const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
             {
                 showEdit ? <EditComment setShowEdit={setShowEdit} comment={commentData}></EditComment> : ''
             }
-            <p><strong><Link to={`/profile/${commentData.commenterId}`}>{commentData.commenter}</Link> </strong>
+            <p><strong><Link to={`/profile/${commentData.commenterId}`}>{commentData.commenter} {spam}</Link> </strong>
                 {
                     user.role === 'Blogger' ?
                         <>
