@@ -28,7 +28,7 @@ const Login = () => {
                         if (result) {
                             console.log(user)
                             if (result.spamcount > 1) {
-                                alert('Sorry you are banned from this site for spamming. Contact us to remove your name from spammer.')
+                                alert('Sorry you are banned from this site for spamming. Contact us to if want to be comment clean.')
                             } else {
                                 setUser({ ...result, userName: result._id })
                                 setModifyCount(modifyCount + 1)
