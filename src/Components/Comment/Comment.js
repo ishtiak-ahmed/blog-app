@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
-import { deleteComment, updateNested, markAsSpam, removeFromSpam, updateParent, toggleFeatureComment } from '../BloggerAction/BloggerAction';
+import { deleteComment, updateNested, setSpamCount, updateParent, toggleFeatureComment } from '../BloggerAction/BloggerAction';
 import EditComment from './EditComment';
 import NewComment from './NewComment';
 
@@ -53,9 +53,9 @@ const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
     }
     const handleSpammer = () => {
         if (spam) {
-            removeFromSpam(commentData.commenterId)
+            setSpamCount(commentData.commenterId, false)
         } else {
-            markAsSpam(commentData.commenterId)
+            setSpamCount(commentData.commenterId, true)
         }
         setSpam(!spam)
     }

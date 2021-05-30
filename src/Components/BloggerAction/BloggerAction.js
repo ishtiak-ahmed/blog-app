@@ -70,12 +70,12 @@ export const updateNested = (id, child) => {
 }
 
 // Mark As Spamm
-export const markAsSpam = (commenter) => {
+export const setSpamCount = (commenter, count) => {
     console.log('added as spammer ', commenter)
-}
-// Mark As Spamm
-export const removeFromSpam = (commenter) => {
-    console.log('Removing from spammer ', commenter)
+    axios.patch(`https://ishtiak-blog.herokuapp.com/spamCount/${commenter}`, { count: count })
+        .then(res => {
+            console.log(res.data)
+        })
 }
 
 
