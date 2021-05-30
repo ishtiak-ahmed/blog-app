@@ -42,6 +42,9 @@ const FullBlog = () => {
     }
     const addDownVote = () => {
         setDownVote([...downVote, user.fullName])
+        const newDownVote = [...downVote, user.userName]
+        axios.patch(`https://ishtiak-blog.herokuapp.com/updateVote/${id}`, { downVote: newDownVote })
+            .then(data => console.log(data))
     }
 
     const handleDelete = () => {
