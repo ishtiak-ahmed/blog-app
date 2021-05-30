@@ -5,6 +5,24 @@
   box-sizing: border-box;
 }
 
+a,
+a:visited,
+a:link {
+  color: #000;
+  text-decoration: none;
+}
+a:hover {
+  color: green;
+}
+
+button {
+  padding: 5px 10px;
+  outline: none;
+  border-radius: 5px;
+  margin-right: 1em;
+  box-shadow: none;
+}
+
 header {
   padding: 1em 0;
   max-width: 1200px;
@@ -32,7 +50,7 @@ header {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 2em;
-  height: 300px;
+  min-height: 300px;
   justify-content: space-between;
   margin: 2em 0;
   padding: 2em;
@@ -45,6 +63,9 @@ header {
 }
 .shortblog div {
   overflow: hidden;
+}
+.blog-img {
+  max-height: 300px;
 }
 img {
   max-width: 100%;

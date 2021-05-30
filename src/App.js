@@ -11,6 +11,7 @@ import {
 import FullBlog from './Components/FullBlog/FullBlog';
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute';
 import Login from './Components/Login/Login';
+import Profile from './Components/Profile/Profile';
 
 export const UserContext = createContext()
 export const ModifyContext = createContext()
@@ -36,6 +37,9 @@ function App() {
           <Switch>
             <PrivateRoute path='/blog/:id'>
               <FullBlog></FullBlog>
+            </PrivateRoute>
+            <PrivateRoute path='/profile/:userName'>
+              <Profile></Profile>
             </PrivateRoute>
             <Route path='/' exact>
               {

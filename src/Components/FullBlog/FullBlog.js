@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
 import { deleteAllComment } from '../BloggerAction/BloggerAction';
@@ -76,7 +77,7 @@ const FullBlog = () => {
             <div className='blog-post'>
                 <div >
                     <h2>{blog.title}</h2>
-                    <h4>{blog.author} <p>at {blog.time}, {blog.date}</p></h4>
+                    <h4><Link to={`/profile/${blog.authorId}`}>{blog.author} </Link> <p>at {blog.time}, {blog.date}</p></h4>
                     <p>{blog.content}</p>
                     {
                         blog.authorId === user.userName ?

@@ -45,6 +45,20 @@ export const updateParent = (id, child) => {
                 })
         })
 }
+export const updateNested = (id, child) => {
+    axios(`https://ishtiak-blog.herokuapp.com/getComment/${id}`)
+        .then(data => {
+            return data.data.reply
+        }).then(data => {
+            const newList = data.filter(id => id !== child)
+            return (newList)
+        }).then(newList => {
+            axios.patch(`https://ishtiak-blog.herokuapp.com/updateParent/${id}`, { reply: newList })
+                .then(res => {
+                    console.log('delete success')
+                })
+        })
+}
 
 // Mark As Spamm
 export const markAsSpam = (commenter) => {

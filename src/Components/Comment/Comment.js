@@ -1,12 +1,13 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
-import { deleteComment, markAsSpam, removeFromSpam, updateParent } from '../BloggerAction/BloggerAction';
+import { deleteComment, updateNested, markAsSpam, removeFromSpam, updateParent } from '../BloggerAction/BloggerAction';
 import EditComment from './EditComment';
 import NewComment from './NewComment';
 
-const Comment = ({ id, parentId, commentStatus }) => {
+const Comment = ({ id, parentId, commentStatus, nested }) => {
     const [user] = useContext(UserContext)
     const [topCommenter, setTopCommenter] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
@@ -23,7 +24,7 @@ const Comment = ({ id, parentId, commentStatus }) => {
                 setCommnetData(data.data)
                 setReply(data.data.reply)
             })
-    }, [showReply, id])
+    }, [showReply, id, modifyCount])
     const toggleReply = () => {
         setShowReply(!showReply)
     }
@@ -40,8 +41,14 @@ const Comment = ({ id, parentId, commentStatus }) => {
     const handleDelete = () => {
         console.log('deleteing comment')
         deleteComment(id)
-        updateParent(parentId, id)
+        if (nested) {
+            console.log('deleting nested reply')
+            updateNested(parentId, id)
+        } else {
+            updateParent(parentId, id)
+        }
         setModifyCount(modifyCount + 1)
+        setShowReply(false)
     }
     const handleSpammer = () => {
         if (spam) {
@@ -63,7 +70,7 @@ const Comment = ({ id, parentId, commentStatus }) => {
             {
                 showEdit ? <EditComment setShowEdit={setShowEdit} comment={commentData}></EditComment> : ''
             }
-            <p><strong>{commentData.commenter} </strong>
+            <p><strong><Link to={`/profile/${commentData.commenterId}`}>{commentData.commenter}</Link> </strong>
                 {
                     user.role === 'Blogger' ?
                         <>
@@ -81,7 +88,7 @@ const Comment = ({ id, parentId, commentStatus }) => {
                             : ''
                         }
                         {
-                            allReply ? allReply.map(reply => <Comment key={reply} parentId={id} id={reply}></Comment>) : ''
+                            allReply ? allReply.map(reply => <Comment key={reply} nested={true} parentId={id} id={reply}></Comment>) : ''
                         }
                     </div>
                     : ''
