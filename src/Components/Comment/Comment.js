@@ -7,7 +7,7 @@ import { deleteComment, updateNested, markAsSpam, removeFromSpam, updateParent }
 import EditComment from './EditComment';
 import NewComment from './NewComment';
 
-const Comment = ({ id, parentId, commentStatus, nested }) => {
+const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
     const [user] = useContext(UserContext)
     const [topCommenter, setTopCommenter] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
@@ -75,8 +75,10 @@ const Comment = ({ id, parentId, commentStatus, nested }) => {
                     user.role === 'Blogger' ?
                         <>
                             <button onClick={handleSpammer}>{spam ? 'Remove From Spam' : 'Mark As Spam'}</button>
-                            <button onClick={() => setTopCommenter(!topCommenter)}>{topCommenter ? 'Remove From Top Commenter' : 'Mark As Top Commenter'}</button>
                         </> : ''
+                }
+                {
+                    user.userName === authorId ? <button onClick={() => setTopCommenter(!topCommenter)} > {topCommenter ? 'Remove From Top Commenter' : 'Mark As Top Commenter'}</button> : ''
                 }
             </p>
             <Action action={{ upVote, addUpVote, downVote, addDownVote, toggleReply, allReply }}></Action>
@@ -88,7 +90,7 @@ const Comment = ({ id, parentId, commentStatus, nested }) => {
                             : ''
                         }
                         {
-                            allReply ? allReply.map(reply => <Comment key={reply} nested={true} parentId={id} id={reply}></Comment>) : ''
+                            allReply ? allReply.map(reply => <Comment key={reply} nested={true} parentId={id} authorId={authorId} id={reply}></Comment>) : ''
                         }
                     </div>
                     : ''

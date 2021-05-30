@@ -20,7 +20,7 @@ export const deleteAllComment = (id) => {
             })
     }
     getChild(id)
-    updateParent(id, [])
+    updateParentToBlank(id, [])
 }
 
 export const deleteComment = (id) => {
@@ -45,12 +45,21 @@ export const updateParent = (id, child) => {
                 })
         })
 }
+export const updateParentToBlank = (id) => {
+    axios.patch(`https://ishtiak-blog.herokuapp.com/updateBlogParent/${id}`, { reply: [] })
+        .then(res => {
+            console.log('delete success')
+        })
+
+}
 export const updateNested = (id, child) => {
     axios(`https://ishtiak-blog.herokuapp.com/getComment/${id}`)
         .then(data => {
             return data.data.reply
         }).then(data => {
+            console.log(data)
             const newList = data.filter(id => id !== child)
+            console.log(newList)
             return (newList)
         }).then(newList => {
             axios.patch(`https://ishtiak-blog.herokuapp.com/updateParent/${id}`, { reply: newList })

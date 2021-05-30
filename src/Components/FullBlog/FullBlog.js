@@ -109,7 +109,7 @@ const FullBlog = () => {
                             : ''
                         }
                         {
-                            allReply.map(reply => <Comment parentId={id} commentStatus={commentStatus} key={reply} id={reply}></Comment>)
+                            allReply.map(reply => <Comment parentId={id} commentStatus={commentStatus} key={reply} nested={false} authorId={blog.authorId} id={reply}></Comment>)
                         }
                     </div> : ''
             }
