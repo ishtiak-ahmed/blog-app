@@ -27,9 +27,16 @@ const Login = () => {
                     .then(result => {
                         if (result) {
                             console.log(user)
-                            if (result.spamcount > 1) {
-                                alert('Sorry you are banned from this site for spamming. Contact us if want to comment clean.')
-                            } else {
+                            if (result.role === 'Commenter') {
+                                if (result.spamcount > 1) {
+                                    alert('Sorry you are banned from this site for spamming. Contact us if want to comment clean.')
+                                } else {
+                                    setUser({ ...result, userName: result._id })
+                                    setModifyCount(modifyCount + 1)
+                                    history.push(from)
+                                }
+                            }
+                            else {
                                 setUser({ ...result, userName: result._id })
                                 setModifyCount(modifyCount + 1)
                                 history.push(from)
