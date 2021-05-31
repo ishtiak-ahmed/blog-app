@@ -18,6 +18,7 @@ const Register = ({ setLoginUser }) => {
                 console.log(result)
                 if (result.data) {
                     setUser(newUser)
+                    history.push('/')
                 } else {
                     alert('something went wrong')
                 }
@@ -34,7 +35,7 @@ const Register = ({ setLoginUser }) => {
                 {errors.userName && <span>User name is required</span>} <br />
                 <label htmlFor="">Email:</label><input {...register("email", { required: true })} /> <br />
                 {errors.email && <span>Email is required</span>} <br />
-                <select {...register('role', { required: true })} >
+                <span style={{ marginRight: '1em' }}>Role:</span><select {...register('role', { required: true })} >
                     <option value="Blogger">Blogger</option>
                     <option value="Commenter">Commenter</option>
                 </select> <br />

@@ -89,7 +89,7 @@ const Login = () => {
 
     return (
         <div className='login'>
-            <h2>Felicity Blog</h2>
+            <h2>Ishtiak Blog</h2>
             {
                 registerForm ? <Form></Form> :
                     <>

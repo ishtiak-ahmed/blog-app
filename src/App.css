@@ -170,6 +170,11 @@ img {
   grid-gap: 1em;
   justify-content: space-between;
 }
+select {
+  padding: 1em 2em;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
 input,
 textarea {
   width: 100%;
