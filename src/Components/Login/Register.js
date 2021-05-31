@@ -12,10 +12,15 @@ const Register = ({ setLoginUser }) => {
 
     const submitRegistration = (data) => {
         console.log(data)
-
-        axios.post('https://ishtiak-blog.herokuapp.com/register', { ...data, spamcount: 0, _id: data.userName })
+        const newUser = { ...data, spamcount: 0, _id: data.userName }
+        axios.post('https://ishtiak-blog.herokuapp.com/register', newUser)
             .then(result => {
                 console.log(result)
+                if (result.data) {
+                    setUser(newUser)
+                } else {
+                    alert('something went wrong')
+                }
             })
     }
     return (
