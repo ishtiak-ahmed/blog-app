@@ -3,6 +3,7 @@ import { useHistory, useLocation } from 'react-router';
 import { ModifyContext, UserContext } from '../../App';
 import { googleLogin } from './Config/LoginManager';
 import { useForm } from "react-hook-form";
+import EmailLogin from './EmailLogin';
 
 const Login = () => {
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
@@ -94,6 +95,7 @@ const Login = () => {
                         <button onClick={handleLogin}>Login With Google Account</button>
                     </>
             }
+            <EmailLogin></EmailLogin>
         </div>
     );
 };
