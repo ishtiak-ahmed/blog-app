@@ -4,8 +4,10 @@ import { ModifyContext, UserContext } from '../../App';
 import { googleLogin } from './Config/LoginManager';
 import { useForm } from "react-hook-form";
 import EmailLogin from './EmailLogin';
+import Register from './Register';
 
 const Login = () => {
+    const [loginUser, setLoginUser] = useState(false)
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const [user, setUser] = useContext(UserContext)
     const [newUser, setNewUser] = useState({})
@@ -95,7 +97,11 @@ const Login = () => {
                         <button onClick={handleLogin}>Login With Google Account</button>
                     </>
             }
-            <EmailLogin></EmailLogin>
+            {
+                loginUser ?
+                    <EmailLogin setLoginUser={setLoginUser}></EmailLogin> :
+                    <Register setLoginUser={setLoginUser}></Register>
+            }
         </div>
     );
 };

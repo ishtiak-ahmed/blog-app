@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router';
 import { ModifyContext, UserContext } from '../../App';
 
-const EmailLogin = () => {
+const EmailLogin = ({setLoginUser}) => {
     const [user, setUser] = useContext(UserContext)
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const history = useHistory()
@@ -33,6 +33,8 @@ const EmailLogin = () => {
     }
     return (
         <div>
+            <h2>Login With Email and Password</h2>
+            Don't have a account? <button onClick={()=>setLoginUser(false)}>Register now</button>
             <form onSubmit={handleSubmit(submitLogin)}>
                 <label htmlFor="">Email:</label><input {...register("email", { required: true })} /> <br />
                 {errors.email && <span>User Name is required</span>} <br />
