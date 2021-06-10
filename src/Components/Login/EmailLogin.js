@@ -1,13 +1,15 @@
 import axios from 'axios';
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { ModifyContext, UserContext } from '../../App';
+import { setCurrentUser } from '../../Redux/Actions/Actions';
 
-const EmailLogin = ({setLoginUser}) => {
-    const [user, setUser] = useContext(UserContext)
+const EmailLogin = (props) => {
     const [modifyCount, setModifyCount] = useContext(ModifyContext)
     const history = useHistory()
+    const {user, setUser, setLoginUser} = props
     const { register, handleSubmit, formState: { errors } } = useForm();
     const submitLogin = (data) => {
         axios.post('https://ishtiak-blog.herokuapp.com/login', data)
@@ -47,4 +49,13 @@ const EmailLogin = ({setLoginUser}) => {
     );
 };
 
-export default EmailLogin;
+// export default EmailLogin;
+
+const mapStateToProps = state => {
+   return { user: state.currentUser }
+}
+const mapDispatchToProps = {
+    setUser: setCurrentUser
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EmailLogin)

@@ -1,28 +1,29 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios'
-import { ModifyContext, UserContext } from '../../App';
-const AddBlog = () => {
+import { postNewBlog } from '../../Redux/Actions/Actions';
+import { connect } from 'react-redux';
+const AddBlog = ({ store, postNewBlog }) => {
+    const { currentUser } = store
     const [showForm, setShowForm] = useState(false)
-    const [modifyCount, setModifyCount] = useContext(ModifyContext)
-    const [user] = useContext(UserContext)
     const [imageUrl, setImageUrl] = useState('')
     const { register, handleSubmit, formState: { errors } } = useForm();
     const addBlog = (blog) => {
-        console.log(blog)
         blog.image = imageUrl;
-        blog.author = user.fullName;
-        blog.authorId = user._id;
+        blog.author = currentUser.fullName;
+        blog.authorId = currentUser.userName;
         blog.time = (new Date()).toLocaleTimeString()
         blog.date = (new Date()).toLocaleDateString()
         blog.upVote = []
         blog.downVote = []
         blog.reply = []
-        axios.post(`https://ishtiak-blog.herokuapp.com/addBlog`, blog)
-            .then(data => {
-                console.log(data)
-                setModifyCount(modifyCount + 1)
-            })
+        postNewBlog(blog)
+        // axios.post(`https://ishtiak-blog.herokuapp.com/addBlog`, blog)
+        //     .then(data => {
+        //         console.log(data)
+        //         setModifyCount(modifyCount + 1)
+        //     })
+
     }
     const uploadImage = (e) => {
         console.log(e.target.files[0])
@@ -62,4 +63,12 @@ const AddBlog = () => {
     );
 };
 
-export default AddBlog;
+const mapStateToProps = state => {
+    return { store: state }
+}
+
+const mapDispatchToProps = {
+    postNewBlog: postNewBlog
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddBlog)
