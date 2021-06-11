@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ModifyContext, UserContext } from '../../App';
 import Action from '../Action/Action';
@@ -7,7 +8,9 @@ import { deleteComment, updateNested, setSpamCount, updateParent, toggleFeatureC
 import EditComment from './EditComment';
 import NewComment from './NewComment';
 
-const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
+const Comment = (props) => {
+    console.log(props)
+    const { id, parentId, commentStatus, nested, authorId } = props
     const [user] = useContext(UserContext)
     const [featureComment, setFeatureComment] = useState(false)
     const [showEdit, setShowEdit] = useState(false)
@@ -104,4 +107,9 @@ const Comment = ({ id, parentId, commentStatus, nested, authorId }) => {
     );
 };
 
-export default Comment;
+// export default Comment;
+
+const mapStateToProps = state => {
+    return { user: state.currentUser }
+}
+export default connect(mapStateToProps)(Comment)
